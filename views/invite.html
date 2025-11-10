@@ -1,0 +1,44 @@
+<section class="card">
+  <h1 class="title">{{ event_title }}</h1>
+  <p class="lead">Dear <strong>{{ family_label }}</strong>, you are invited.</p>
+  <p>Venue: <strong>{{ venue_name }}</strong> — {{ venue_address }}</p>
+  <p>
+    <a class="link" target="_blank" href="https://www.google.com/maps/search/?api=1&query={{ maps_q }}">Open in Google Maps</a>
+  </p>
+  <form id="rsvpForm" class="form">
+    <label>
+      RSVP
+      <select name="status" required>
+        <option value="">Select…</option>
+        <option value="yes">Will attend</option>
+        <option value="maybe">Maybe</option>
+        <option value="no">Cannot attend</option>
+      </select>
+    </label>
+    <label>
+      Number attending (max {{ party_size }})
+      <input type="number" name="count" min="0" max="{{ party_size }}" value="{{ party_size }}" />
+    </label>
+    <label>
+      Notes (allergies, accessibility, etc.)
+      <textarea name="notes" rows="3"></textarea>
+    </label>
+    <button class="btn" type="submit">Send RSVP</button>
+  </form>
+</section>
+<script>
+  const token = "{{ token }}";
+  document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(fd.entries());
+    const res = await fetch(`/api/rsvp/${token}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.ok && data.redirect) window.location.href = data.redirect;
+    else alert('There was a problem. Please try again.');
+  });
+</script>
