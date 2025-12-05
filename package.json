@@ -1,0 +1,16 @@
+{
+  "name": "digital-rsvp",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "seed": "node data/seed.js"
+  },
+  "dependencies": {
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nanoid": "^5.0.7",
+    "sqlite3": "^5.1.7"
+  }
+}

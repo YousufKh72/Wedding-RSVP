@@ -1,0 +1,13 @@
+<section class="card">
+  <video id="inviteVideo" controls playsinline class="video">
+    <source src="/public/video/invite.mp4" type="video/mp4" />
+  </video>
+  <div class="muted">If the video doesn't continue automatically, tap Continue.</div>
+  <a id="continue" class="btn" href="/invite/{{ token }}">Continue</a>
+</section>
+<script>
+  const token = "{{ token }}";
+  const v = document.getElementById('inviteVideo');
+  const go = () => { if (token) window.location.href = '/invite/' + token; };
+  v?.addEventListener('ended', go);
+</script>
